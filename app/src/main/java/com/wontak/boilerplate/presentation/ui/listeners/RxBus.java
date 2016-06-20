@@ -1,4 +1,4 @@
-package com.wontak.boilerplate.base;
+package com.wontak.boilerplate.presentation.ui.listeners;
 
 import rx.Observable;
 import rx.subjects.PublishSubject;

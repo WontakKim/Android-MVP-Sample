@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.wontak.boilerplate.BaseApplication;
 import com.wontak.boilerplate.di.components.ApplicationComponent;
 import com.wontak.boilerplate.di.modules.ActivityModule;
+import com.wontak.boilerplate.presentation.ui.listeners.RxBus;
 
 import javax.inject.Inject;
 
@@ -15,7 +16,8 @@ import rx.subscriptions.CompositeSubscription;
 
 public abstract class BaseActivity extends AppCompatActivity
 {
-    @Inject RxBus bus;
+    @Inject
+    RxBus bus;
 
     private CompositeSubscription subscription;
 

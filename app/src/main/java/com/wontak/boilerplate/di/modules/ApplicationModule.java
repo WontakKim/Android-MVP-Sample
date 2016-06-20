@@ -3,7 +3,7 @@ package com.wontak.boilerplate.di.modules;
 import android.app.Application;
 import android.content.Context;
 
-import com.wontak.boilerplate.base.RxBus;
+import com.wontak.boilerplate.presentation.ui.listeners.RxBus;
 
 import javax.inject.Singleton;
 
