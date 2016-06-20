@@ -3,6 +3,7 @@ package com.wontak.boilerplate.di.components;
 import com.wontak.boilerplate.di.PerActivity;
 import com.wontak.boilerplate.di.modules.ActivityModule;
 import com.wontak.boilerplate.di.modules.UserModule;
+import com.wontak.boilerplate.presentation.ui.fragments.MainFragment;
 
 import dagger.Component;
 
@@ -10,4 +11,5 @@ import dagger.Component;
 @Component(dependencies = ApplicationComponent.class, modules = { ActivityModule.class, UserModule.class })
 public interface UserComponent
 {
+    void inject(MainFragment fragment);
 }
