@@ -4,6 +4,9 @@ import android.app.Application;
 import android.content.Context;
 
 import com.wontak.boilerplate.R;
+import com.wontak.boilerplate.data.repositories.GithubDataRepository;
+import com.wontak.boilerplate.domain.repositories.GithubRepository;
+import com.wontak.boilerplate.network.GithubApiService;
 import com.wontak.boilerplate.presentation.ui.listeners.RxBus;
 
 import javax.inject.Singleton;
@@ -69,5 +72,19 @@ public class ApplicationModule
                 .client(client)
                 .build();
         return retrofit;
+    }
+
+    @Provides
+    @Singleton
+    public GithubApiService provideGithubApiService(Retrofit retrofit)
+    {
+        return retrofit.create(GithubApiService.class);
+    }
+
+    @Provides
+    @Singleton
+    public GithubRepository provideGithubRepository(GithubDataRepository githubDataRepository)
+    {
+        return githubDataRepository;
     }
 }
