@@ -1,6 +1,6 @@
 <resources>
 
     <string name="app_name">boilerplate</string>
-    <string name="endpoint">https://192.168.0.1</string>
+    <string name="endpoint">https://api.github.com</string>
 
 </resources>
