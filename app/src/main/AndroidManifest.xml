@@ -21,6 +21,11 @@
             </intent-filter>
         </activity>
 
+        <!-- Result -->
+        <activity android:name=".presentation.ui.activities.ResultActivity"
+                  android:screenOrientation="portrait">
+        </activity>
+
     </application>
 
 </manifest>
