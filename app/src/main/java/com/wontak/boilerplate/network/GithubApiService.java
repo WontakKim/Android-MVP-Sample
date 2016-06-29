@@ -1,5 +1,7 @@
 package com.wontak.boilerplate.network;
 
+import com.wontak.boilerplate.network.models.User;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -7,7 +9,7 @@ import retrofit2.http.Path;
 public interface GithubApiService
 {
     @GET("/users/{username}")
-    Call getUser(
+    Call<User> getUser(
             @Path("username") String username
     );
 
