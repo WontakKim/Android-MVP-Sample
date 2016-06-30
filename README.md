@@ -1,8 +1,6 @@
 # Android-Boilerplate
 Android boilerplate project using clean architecture
 
-_Gonna update with sample code step by step._
-
 The project is setup using:
 
 - [Clean architecture] (https://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html)
