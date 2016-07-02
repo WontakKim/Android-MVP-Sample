@@ -39,6 +39,13 @@ public class MainFragment extends BaseFragment
         return fragmentView;
     }
 
+    @Override
+    public void onDestroyView()
+    {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
     @OnClick(R.id.btn_search)
     public void onSearchClick()
     {
