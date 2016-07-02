@@ -1,5 +1,6 @@
 package com.wontak.boilerplate.presentation.ui.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -93,6 +94,12 @@ public class ResultFragment extends BaseFragment
     private String getUsername()
     {
         return getArguments().getString(ResultActivity.KEY_USERNAME);
+    }
+
+    @Override
+    public Context context()
+    {
+        return getActivity().getApplicationContext();
     }
 
     @Override

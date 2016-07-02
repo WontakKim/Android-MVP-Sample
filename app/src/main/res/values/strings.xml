@@ -3,4 +3,8 @@
     <string name="app_name">boilerplate</string>
     <string name="endpoint">https://api.github.com</string>
 
+    <string name="exception_message_generic">There was an application error</string>
+    <string name="exception_message_no_connection">There is no internet connection</string>
+    <string name="exception_message_user_not_found">Cannot find user data</string>
+
 </resources>

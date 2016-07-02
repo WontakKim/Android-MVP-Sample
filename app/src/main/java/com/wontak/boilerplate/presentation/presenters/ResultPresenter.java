@@ -1,10 +1,13 @@
 package com.wontak.boilerplate.presentation.presenters;
 
+import com.wontak.boilerplate.domain.exceptions.DefaultErrorBundle;
+import com.wontak.boilerplate.domain.exceptions.ErrorBundle;
 import com.wontak.boilerplate.domain.interactors.GetUserRepositoriesUseCase;
 import com.wontak.boilerplate.domain.interactors.GetUserUseCase;
 import com.wontak.boilerplate.domain.models.Repository;
 import com.wontak.boilerplate.domain.models.User;
 import com.wontak.boilerplate.presentation.converters.UIModelConverter;
+import com.wontak.boilerplate.presentation.exceptions.ErrorMessageFactory;
 import com.wontak.boilerplate.presentation.ui.listeners.ResultView;
 
 import java.util.List;
@@ -62,6 +65,12 @@ public class ResultPresenter
         view.hideLoading();
     }
 
+    private void showErrorMessage(ErrorBundle errorBundle)
+    {
+        String errorMessage = ErrorMessageFactory.create(view.context(), errorBundle.getException());
+        view.showError(errorMessage);
+    }
+
     private final class GetUserSubscriber extends Subscriber<User>
     {
         @Override
@@ -74,6 +83,7 @@ public class ResultPresenter
         public void onError(Throwable e)
         {
             hideViewLoading();
+            showErrorMessage(new DefaultErrorBundle((Exception) e));
         }
 
         @Override
@@ -95,6 +105,7 @@ public class ResultPresenter
         public void onError(Throwable e)
         {
             hideViewLoading();
+            showErrorMessage(new DefaultErrorBundle((Exception) e));
         }
 
         @Override

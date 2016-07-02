@@ -3,6 +3,8 @@ package com.wontak.boilerplate.data.repositories;
 import com.wontak.boilerplate.domain.repositories.GithubRepository;
 import com.wontak.boilerplate.network.GithubApiService;
 import com.wontak.boilerplate.network.converters.NetworkModelConverter;
+import com.wontak.boilerplate.network.exceptions.NetworkConnectionException;
+import com.wontak.boilerplate.network.exceptions.UserNotFoundException;
 import com.wontak.boilerplate.network.models.Repository;
 import com.wontak.boilerplate.network.models.User;
 
@@ -33,11 +35,18 @@ public class GithubDataRepository implements GithubRepository
                 Response<User> response = githubApiService.getUser(username).execute();
                 User user = response.body();
 
-                subscriber.onNext(NetworkModelConverter.convertToDomainModel(user));
+                if (user != null)
+                {
+                    subscriber.onNext(NetworkModelConverter.convertToDomainModel(user));
+                }
+                else
+                {
+                    subscriber.onError(new UserNotFoundException());
+                }
             }
             catch (Exception e)
             {
-                subscriber.onError(e);
+                subscriber.onError(new NetworkConnectionException(e.getCause()));
             }
 
             subscriber.onCompleted();
@@ -54,12 +63,18 @@ public class GithubDataRepository implements GithubRepository
                 Response<List<Repository>> response = githubApiService.getUsersRepositories(username).execute();
                 List<Repository> repositories = response.body();
 
-                subscriber.onNext(NetworkModelConverter.convertToDomainModel(repositories));
-
+                if (repositories != null)
+                {
+                    subscriber.onNext(NetworkModelConverter.convertToDomainModel(repositories));
+                }
+                else
+                {
+                    subscriber.onError(new NetworkConnectionException());
+                }
             }
             catch (Exception e)
             {
-                subscriber.onError(e);
+                subscriber.onError(new NetworkConnectionException(e.getCause()));
             }
 
             subscriber.onCompleted();

@@ -1,5 +1,7 @@
 package com.wontak.boilerplate.presentation.ui.listeners;
 
+import android.content.Context;
+
 import com.wontak.boilerplate.domain.models.User;
 import com.wontak.boilerplate.presentation.models.RepositoryItem;
 
@@ -14,6 +16,8 @@ public interface ResultView
 
     interface View
     {
+        Context context();
+
         void onRepositoryClick(RepositoryItem repositoryItem);
 
         void showUser(User user);
