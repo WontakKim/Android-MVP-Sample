@@ -7,7 +7,6 @@
     <FrameLayout
         android:id="@+id/content_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="@dimen/screen_edge_padding"/>
+        android:layout_height="match_parent"/>
 
 </FrameLayout>

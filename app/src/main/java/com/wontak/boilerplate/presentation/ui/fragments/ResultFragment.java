@@ -2,48 +2,44 @@ package com.wontak.boilerplate.presentation.ui.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ProgressBar;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.wontak.boilerplate.R;
 import com.wontak.boilerplate.base.BaseFragment;
 import com.wontak.boilerplate.di.components.UserComponent;
 import com.wontak.boilerplate.domain.models.User;
+import com.wontak.boilerplate.presentation.models.RepositoryItem;
 import com.wontak.boilerplate.presentation.presenters.ResultPresenter;
 import com.wontak.boilerplate.presentation.ui.activities.ResultActivity;
+import com.wontak.boilerplate.presentation.ui.adapters.RepositoriesAdapter;
 import com.wontak.boilerplate.presentation.ui.listeners.ResultView;
 
-import java.text.SimpleDateFormat;
-import java.util.Locale;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public class ResultFragment extends BaseFragment
     implements ResultView.View
 {
-    @Bind(R.id.image_avatar)
-    SimpleDraweeView avatarImage;
+    @Bind(R.id.rv_repositories)
+    RecyclerView recyclerView;
 
-    @Bind(R.id.label_name)
-    TextView nameLabel;
-
-    @Bind(R.id.label_username)
-    TextView usernameLabel;
-
-    @Bind(R.id.label_created_at)
-    TextView createAtLabel;
-
-    @Bind(R.id.label_email)
-    TextView emailLabel;
+    @Bind(R.id.progress)
+    ProgressBar progressBar;
 
     @Inject
     ResultPresenter presenter;
+
+    private RepositoriesAdapter adapter;
 
     public static ResultFragment newInstance(String username)
     {
@@ -70,13 +66,25 @@ public class ResultFragment extends BaseFragment
 
         ButterKnife.bind(this, fragmentView);
 
+        initializeRecyclerView();
+
         return fragmentView;
+    }
+
+    private void initializeRecyclerView()
+    {
+        adapter = new RepositoriesAdapter(this);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
+
+        showLoading();
 
         presenter.setView(this);
         presenter.getUser(getUsername());
@@ -88,17 +96,38 @@ public class ResultFragment extends BaseFragment
     }
 
     @Override
-    public void renderUser(User user)
+    public void onRepositoryClick(RepositoryItem repositoryItem)
     {
-        avatarImage.setImageURI(user.avatarUrl);
+        Timber.d("Repository html url : " + repositoryItem.htmlUrl);
+    }
 
-        nameLabel.setText(user.name);
-        usernameLabel.setText(user.username);
-        emailLabel.setText(user.email);
+    @Override
+    public void showUser(User user)
+    {
+        presenter.getUserRepositories(getUsername());
+    }
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM yyyy", Locale.US);
-        String dateStr = dateFormat.format(user.createdAt);
-        String createdAtStr = String.format("Joined on %s", dateStr);
-        createAtLabel.setText(createdAtStr);
+    @Override
+    public void showRepositories(List<RepositoryItem> repositoryItems)
+    {
+        adapter.addNewRepositoryItems(repositoryItems);
+    }
+
+    @Override
+    public void showLoading()
+    {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoading()
+    {
+        progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showError(String message)
+    {
+        showToastMessage(message);
     }
 }
