@@ -7,8 +7,6 @@ import com.wontak.boilerplate.R;
 import com.wontak.boilerplate.base.BaseActivity;
 import com.wontak.boilerplate.presentation.ui.fragments.MainFragment;
 
-import butterknife.ButterKnife;
-
 public class MainActivity extends BaseActivity
 {
     private MainFragment fragment;
@@ -18,8 +16,6 @@ public class MainActivity extends BaseActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        ButterKnife.bind(this);
 
         initializeFragment();
     }

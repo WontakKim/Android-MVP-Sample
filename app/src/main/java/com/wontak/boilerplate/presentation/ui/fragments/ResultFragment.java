@@ -26,7 +26,6 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class ResultFragment extends BaseFragment
     implements ResultView.View
@@ -112,7 +111,7 @@ public class ResultFragment extends BaseFragment
     @Override
     public void onRepositoryClick(RepositoryItem repositoryItem)
     {
-        Timber.d("Repository html url : " + repositoryItem.htmlUrl);
+        ((ResultActivity) getActivity()).launchResultActivity(repositoryItem.htmlUrl);
     }
 
     @Override

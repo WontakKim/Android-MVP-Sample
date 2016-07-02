@@ -1,5 +1,6 @@
 package com.wontak.boilerplate.presentation.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.wontak.boilerplate.R;
@@ -52,5 +53,14 @@ public class ResultActivity extends BaseActivity
         String username = getIntent().getExtras().getString(KEY_USERNAME);
         fragment = ResultFragment.newInstance(username);
         addFragment(R.id.content_main, fragment);
+    }
+
+
+    public void launchResultActivity(String url)
+    {
+        Intent intent = new Intent(this, WebActivity.class);
+        intent.putExtra(WebActivity.KEY_URL, url);
+
+        startActivity(intent);
     }
 }
