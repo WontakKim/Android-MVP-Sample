@@ -1,5 +1,6 @@
 package com.wontak.boilerplate.network.converters;
 
+import com.wontak.boilerplate.network.models.Repository;
 import com.wontak.boilerplate.network.models.User;
 
 public class NetworkModelConverter
@@ -18,6 +19,18 @@ public class NetworkModelConverter
         toReturn.following = user.following;
 
         toReturn.createdAt = user.createdAt;
+
+        return toReturn;
+    }
+
+    public static com.wontak.boilerplate.domain.models.Repository convertToDomainModel(Repository repository)
+    {
+        com.wontak.boilerplate.domain.models.Repository toReturn = new com.wontak.boilerplate.domain.models.Repository();
+
+        toReturn.id = repository.id;
+
+        toReturn.name = repository.name;
+        toReturn.url = repository.url;
 
         return toReturn;
     }
