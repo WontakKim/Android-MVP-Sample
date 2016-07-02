@@ -46,6 +46,7 @@ public class NetworkModelConverter
 
         toReturn.name = repository.name;
         toReturn.url = repository.url;
+        toReturn.htmlUrl = repository.htmlUrl;
 
         return toReturn;
     }

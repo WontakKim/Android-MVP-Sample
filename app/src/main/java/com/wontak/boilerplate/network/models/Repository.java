@@ -12,4 +12,7 @@ public class Repository
 
     @SerializedName("url")
     public String url;
+
+    @SerializedName("html_url")
+    public String htmlUrl;
 }
