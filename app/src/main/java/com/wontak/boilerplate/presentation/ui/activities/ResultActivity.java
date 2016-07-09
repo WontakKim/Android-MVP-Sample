@@ -48,6 +48,7 @@ public class ResultActivity extends BaseActivity
                 .userModule(new UserModule())
                 .build();
     }
+
     private void initializeFragment()
     {
         String username = getIntent().getExtras().getString(KEY_USERNAME);
