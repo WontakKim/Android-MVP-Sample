@@ -54,7 +54,7 @@ public abstract class BaseActivity extends AppCompatActivity
 
     protected ApplicationComponent getApplicationComponent()
     {
-        return ((BaseApplication)getApplication()).getApplicationComponent();
+        return ((BaseApplication) getApplication()).getApplicationComponent();
     }
 
     protected ActivityModule getActivityModule()
