@@ -33,6 +33,12 @@ public class ResultPresenter
         this.getUserRepositoriesUseCase = getUserRepositoriesUseCase;
     }
 
+    public void destroy()
+    {
+        getUserUseCase.unsubscribe();
+        getUserRepositoriesUseCase.unsubscribe();
+    }
+
     public void setView(ResultView.View view)
     {
         this.view = view;

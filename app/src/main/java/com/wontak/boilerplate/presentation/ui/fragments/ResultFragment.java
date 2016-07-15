@@ -60,6 +60,13 @@ public class ResultFragment extends BaseFragment
     }
 
     @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        presenter.destroy();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View fragmentView = inflater.inflate(R.layout.fragment_result, container, false);
