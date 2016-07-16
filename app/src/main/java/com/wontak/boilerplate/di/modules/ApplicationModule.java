@@ -7,6 +7,7 @@ import com.wontak.boilerplate.R;
 import com.wontak.boilerplate.data.repositories.GithubDataRepository;
 import com.wontak.boilerplate.domain.repositories.GithubRepository;
 import com.wontak.boilerplate.network.GithubApiService;
+import com.wontak.boilerplate.network.GithubCallAdapterFactory;
 import com.wontak.boilerplate.presentation.ui.listeners.RxBus;
 
 import javax.inject.Singleton;
@@ -16,7 +17,6 @@ import dagger.Provides;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
@@ -70,7 +70,7 @@ public class ApplicationModule
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(application.getResources().getString(R.string.endpoint))
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(GithubCallAdapterFactory.create())
                 .client(client)
                 .build();
         return retrofit;
