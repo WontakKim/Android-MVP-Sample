@@ -51,6 +51,7 @@ public class GithubCallAdapterFactory extends CallAdapter.Factory
             return wrapped.responseType();
         }
 
+        @SuppressWarnings("unchecked")
         @Override
         public <R> Observable<?> adapt(Call<R> call)
         {
