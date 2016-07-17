@@ -55,7 +55,7 @@ public class GithubCallAdapterFactory extends CallAdapter.Factory
         @Override
         public <R> Observable<?> adapt(Call<R> call)
         {
-            return ((Observable<Throwable>) wrapped.adapt(call))
+            return ((Observable<R>) wrapped.adapt(call))
                     .onErrorResumeNext(throwable -> Observable.error(asGithubException(throwable)));
         }
 
