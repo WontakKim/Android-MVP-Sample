@@ -1,5 +1,5 @@
 # Android-Boilerplate
-Android boilerplate project using clean architecture
+Android boilerplate project using clean architecture with github client sample codes
 
 The project is setup using:
 
