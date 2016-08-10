@@ -57,7 +57,7 @@ public class ResultActivity extends BaseActivity
     }
 
 
-    public void launchResultActivity(String url)
+    public void launchWebActivity(String url)
     {
         Intent intent = new Intent(this, WebActivity.class);
         intent.putExtra(WebActivity.KEY_URL, url);

@@ -118,7 +118,7 @@ public class ResultFragment extends BaseFragment
     @Override
     public void onRepositoryClick(RepositoryItem repositoryItem)
     {
-        ((ResultActivity) getActivity()).launchResultActivity(repositoryItem.htmlUrl);
+        ((ResultActivity) getActivity()).launchWebActivity(repositoryItem.htmlUrl);
     }
 
     @Override
