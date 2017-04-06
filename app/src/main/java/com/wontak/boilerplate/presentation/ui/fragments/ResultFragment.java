@@ -4,12 +4,14 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
+import com.wontak.boilerplate.R;
 import com.wontak.boilerplate.base.BaseFragment;
-import com.wontak.boilerplate.databinding.ResultFragmentBinding;
 import com.wontak.boilerplate.di.components.UserComponent;
 import com.wontak.boilerplate.domain.models.User;
 import com.wontak.boilerplate.presentation.models.RepositoryItem;
@@ -22,13 +24,21 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class ResultFragment extends BaseFragment
     implements ResultView.View
 {
+    @Bind(R.id.rv_repositories)
+    RecyclerView recyclerView;
+
+    @Bind(R.id.progress)
+    ProgressBar progressBar;
+
     @Inject
     ResultPresenter presenter;
 
-    private ResultFragmentBinding binding;
     private RepositoriesAdapter adapter;
 
     public static ResultFragment newInstance(String username)
@@ -59,19 +69,28 @@ public class ResultFragment extends BaseFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        binding = ResultFragmentBinding.inflate(inflater, container, false);
+        View fragmentView = inflater.inflate(R.layout.fragment_result, container, false);
+
+        ButterKnife.bind(this, fragmentView);
 
         initializeRecyclerView();
 
-        return binding.getRoot();
+        return fragmentView;
     }
 
     private void initializeRecyclerView()
     {
         adapter = new RepositoriesAdapter(this);
 
-        binding.rvRepositories.setLayoutManager(new LinearLayoutManager(getActivity()));
-        binding.rvRepositories.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onDestroyView()
+    {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 
     @Override
@@ -117,13 +136,13 @@ public class ResultFragment extends BaseFragment
     @Override
     public void showLoading()
     {
-        binding.progressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading()
     {
-        binding.progressBar.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override

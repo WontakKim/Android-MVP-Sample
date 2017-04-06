@@ -1,21 +1,24 @@
 package com.wontak.boilerplate.presentation.ui.adapters;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.wontak.boilerplate.databinding.RepositoryItemBinding;
+import com.wontak.boilerplate.R;
 import com.wontak.boilerplate.presentation.models.RepositoryItem;
 import com.wontak.boilerplate.presentation.ui.listeners.ResultView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RepositoriesAdapter extends RecyclerView.Adapter<RepositoriesAdapter.ViewHolder>
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
+public class RepositoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     implements ResultView.RecyclerViewClickListener
 {
     private List<RepositoryItem> repositoryItems = new ArrayList();
@@ -23,7 +26,8 @@ public class RepositoriesAdapter extends RecyclerView.Adapter<RepositoriesAdapte
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        public RepositoryItemBinding binding;
+        @Bind(R.id.label_name)
+        TextView nameLabel;
 
         private ResultView.RecyclerViewClickListener listener;
 
@@ -31,9 +35,14 @@ public class RepositoriesAdapter extends RecyclerView.Adapter<RepositoriesAdapte
         {
             super(v);
 
-            binding = DataBindingUtil.getBinding(v);
+            ButterKnife.bind(this, v);
             v.setOnClickListener(this);
             this.listener = listener;
+        }
+
+        public void setup(RepositoryItem item)
+        {
+            nameLabel.setText(item.name);
         }
 
         @Override
@@ -49,21 +58,20 @@ public class RepositoriesAdapter extends RecyclerView.Adapter<RepositoriesAdapte
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        RepositoryItemBinding binding = RepositoryItemBinding.inflate(inflater, parent, false);
-        return new ViewHolder(binding.getRoot(), this);
+        View view = inflater.inflate(R.layout.item_repository, parent, false);
+        return new ViewHolder(view, this);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position)
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position)
     {
         RepositoryItem repositoryItem = repositoryItems.get(position);
-        holder.binding.setRepositoryItem(repositoryItem);
-        holder.binding.executePendingBindings();
+        ((ViewHolder) holder).setup(repositoryItem);
     }
 
     @Override
