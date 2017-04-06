@@ -1,7 +1,9 @@
 package com.wontak.boilerplate.presentation.ui.activities;
 
 import android.os.Bundle;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.wontak.boilerplate.R;
 import com.wontak.boilerplate.base.BaseActivity;
@@ -29,7 +31,28 @@ public class WebActivity extends BaseActivity
 
     private void initializeWebView()
     {
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+
+        webView.setWebViewClient(new WebViewClient());
         webView.loadUrl(getUrl());
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        webView.removeAllViews();
+        webView.destroy();
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        if (webView.canGoBack())
+            webView.goBack();
+        else
+            finish();
     }
 
     private String getUrl()
