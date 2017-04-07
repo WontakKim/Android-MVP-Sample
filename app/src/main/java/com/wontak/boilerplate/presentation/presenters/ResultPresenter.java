@@ -46,14 +46,12 @@ public class ResultPresenter
 
     public void getUser(String username)
     {
-        getUserUseCase.setUsername(username);
-        getUserUseCase.execute(new GetUserSubscriber());
+        getUserUseCase.execute(username, new GetUserSubscriber());
     }
 
     public void getUserRepositories(String username)
     {
-        getUserRepositoriesUseCase.setUsername(username);
-        getUserRepositoriesUseCase.execute(new GetUserRepositoriesSubscriber());
+        getUserRepositoriesUseCase.execute(username, new GetUserRepositoriesSubscriber());
     }
 
     private void showUserDetailsInView(User user)

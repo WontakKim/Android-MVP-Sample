@@ -9,11 +9,9 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class GetUserUseCase extends BaseUseCase
+public class GetUserUseCase extends BaseUseCase<String>
 {
     private GithubRepository githubRepository;
-
-    private String username;
 
     @Inject
     public GetUserUseCase(GithubRepository githubRepository)
@@ -23,13 +21,8 @@ public class GetUserUseCase extends BaseUseCase
         this.githubRepository = githubRepository;
     }
 
-    public void setUsername(String username)
-    {
-        this.username = username;
-    }
-
     @Override
-    protected Observable buildUseCaseObservable()
+    protected Observable buildUseCaseObservable(String username)
     {
         return githubRepository.getUser(username);
     }
