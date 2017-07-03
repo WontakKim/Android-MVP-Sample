@@ -1,6 +1,6 @@
 package com.wontak.boilerplate.di;
 
-public interface HasComponent<T>
-{
+public interface HasComponent<T> {
+
     T getComponent();
 }

@@ -2,8 +2,8 @@ package com.wontak.boilerplate.domain.models;
 
 import java.util.Date;
 
-public class User
-{
+public class User {
+
     public String username;
     public String name;
 

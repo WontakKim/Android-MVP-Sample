@@ -8,8 +8,8 @@ import com.wontak.boilerplate.presentation.ui.fragments.ResultFragment;
 import dagger.Component;
 
 @PerActivity
-@Component(dependencies = ApplicationComponent.class, modules = { ActivityModule.class, UserModule.class })
-public interface UserComponent
-{
+@Component(dependencies = ApplicationComponent.class, modules = {ActivityModule.class, UserModule.class})
+public interface UserComponent {
+
     void inject(ResultFragment fragment);
 }

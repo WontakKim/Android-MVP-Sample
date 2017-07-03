@@ -9,19 +9,17 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class UserModule
-{
+public class UserModule {
+
     @Provides
     @PerActivity
-    GetUserUseCase provideGetUserUseCase(GithubRepository githubRepository)
-    {
+    GetUserUseCase provideGetUserUseCase(GithubRepository githubRepository) {
         return new GetUserUseCase(githubRepository);
     }
 
     @Provides
     @PerActivity
-    GetUserRepositoriesUseCase provideGetUserRepositoriesUseCase(GithubRepository githubRepository)
-    {
+    GetUserRepositoriesUseCase provideGetUserRepositoriesUseCase(GithubRepository githubRepository) {
         return new GetUserRepositoriesUseCase(githubRepository);
     }
 }

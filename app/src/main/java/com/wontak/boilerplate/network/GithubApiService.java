@@ -5,12 +5,12 @@ import com.wontak.boilerplate.network.models.User;
 
 import java.util.List;
 
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import rx.Observable;
 
-public interface GithubApiService
-{
+public interface GithubApiService {
+
     @GET("/users/{username}")
     Observable<User> getUser(
             @Path("username") String username

@@ -1,65 +1,45 @@
 package com.wontak.boilerplate.base;
 
-import rx.Observable;
-import rx.Scheduler;
-import rx.Subscriber;
-import rx.Subscription;
-import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.subscriptions.Subscriptions;
+import dagger.internal.Preconditions;
+import io.reactivex.Observable;
+import io.reactivex.Scheduler;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableObserver;
 
-public abstract class BaseUseCase<Params>
-{
-    private Subscription subscription = Subscriptions.empty();
+public abstract class BaseUseCase<T, Params> {
 
-    private Scheduler subscribeOn;
-    private Scheduler observeOn;
+    private final Scheduler subscribeOn;
+    private final Scheduler observeOn;
 
-    public BaseUseCase(Scheduler subscribeOn, Scheduler observeOn)
-    {
+    private final CompositeDisposable disposables;
+
+    public BaseUseCase(Scheduler subscribeOn, Scheduler observeOn) {
         this.subscribeOn = subscribeOn;
         this.observeOn = observeOn;
+
+        disposables = new CompositeDisposable();
     }
 
-    protected abstract Observable buildUseCaseObservable(Params params);
+    protected abstract Observable<T> buildUseCaseObservable(Params params);
 
-    public void execute(Params params, Subscriber subscriber)
-    {
-        this.subscription = this.buildUseCaseObservable(params)
+    public void execute(DisposableObserver<T> observer, Params params) {
+        Preconditions.checkNotNull(observer);
+        final Observable<T> observable = buildUseCaseObservable(params)
                 .subscribeOn(subscribeOn)
-                .observeOn(observeOn)
-                .subscribe(subscriber);
+                .observeOn(observeOn);
+        addDisposable(observable.subscribeWith(observer));
     }
 
-    public void execute(Params params, final Action1 onNext)
-    {
-        this.subscription = this.buildUseCaseObservable(params)
-                .subscribeOn(subscribeOn)
-                .observeOn(observeOn)
-                .subscribe(onNext);
-    }
-
-    public void execute(Params params, final Action1 onNext, final Action1 onError)
-    {
-        this.subscription = this.buildUseCaseObservable(params)
-                .subscribeOn(subscribeOn)
-                .observeOn(observeOn)
-                .subscribe(onNext, onError);
-    }
-
-    public void execute(Params params, final Action1 onNext, final Action1 onError, final Action0 onComplete)
-    {
-        this.subscription = this.buildUseCaseObservable(params)
-                .subscribeOn(subscribeOn)
-                .observeOn(observeOn)
-                .subscribe(onNext, onError, onComplete);
-    }
-
-    public void unsubscribe()
-    {
-        if (!subscription.isUnsubscribed())
-        {
-            subscription.unsubscribe();
+    public void dispose() {
+        if (!disposables.isDisposed()) {
+            disposables.dispose();
         }
+    }
+
+    private void addDisposable(Disposable disposable) {
+        Preconditions.checkNotNull(disposable);
+        Preconditions.checkNotNull(disposables);
+        disposables.add(disposable);
     }
 }

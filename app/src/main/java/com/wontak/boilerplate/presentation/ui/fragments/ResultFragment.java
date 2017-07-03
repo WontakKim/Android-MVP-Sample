@@ -24,16 +24,16 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
-public class ResultFragment extends BaseFragment
-    implements ResultView.View
-{
-    @Bind(R.id.rv_repositories)
+public class ResultFragment extends BaseFragment implements ResultView.View {
+
+    @BindView(R.id.rv_repositories)
     RecyclerView recyclerView;
 
-    @Bind(R.id.progress)
+    @BindView(R.id.progress)
     ProgressBar progressBar;
 
     @Inject
@@ -41,8 +41,9 @@ public class ResultFragment extends BaseFragment
 
     private RepositoriesAdapter adapter;
 
-    public static ResultFragment newInstance(String username)
-    {
+    private Unbinder unbinder;
+
+    public static ResultFragment newInstance(String username) {
         ResultFragment fragment = new ResultFragment();
 
         Bundle args = new Bundle();
@@ -53,33 +54,26 @@ public class ResultFragment extends BaseFragment
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getComponent(UserComponent.class).inject(this);
     }
 
     @Override
-    public void onDestroy()
-    {
+    public void onDestroy() {
         super.onDestroy();
         presenter.destroy();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
-        View fragmentView = inflater.inflate(R.layout.fragment_result, container, false);
-
-        ButterKnife.bind(this, fragmentView);
-
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_result, container, false);
+        unbinder = ButterKnife.bind(this, view);
         initializeRecyclerView();
-
-        return fragmentView;
+        return view;
     }
 
-    private void initializeRecyclerView()
-    {
+    private void initializeRecyclerView() {
         adapter = new RepositoriesAdapter(this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -87,15 +81,13 @@ public class ResultFragment extends BaseFragment
     }
 
     @Override
-    public void onDestroyView()
-    {
+    public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
-    {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         showLoading();
@@ -104,50 +96,42 @@ public class ResultFragment extends BaseFragment
         presenter.getUser(getUsername());
     }
 
-    private String getUsername()
-    {
+    private String getUsername() {
         return getArguments().getString(ResultActivity.KEY_USERNAME);
     }
 
     @Override
-    public Context context()
-    {
+    public Context context() {
         return getActivity().getApplicationContext();
     }
 
     @Override
-    public void onRepositoryClick(RepositoryItem repositoryItem)
-    {
+    public void onRepositoryClick(RepositoryItem repositoryItem) {
         ((ResultActivity) getActivity()).launchWebActivity(repositoryItem.htmlUrl);
     }
 
     @Override
-    public void showUser(User user)
-    {
+    public void showUser(User user) {
         presenter.getUserRepositories(getUsername());
     }
 
     @Override
-    public void showRepositories(List<RepositoryItem> repositoryItems)
-    {
+    public void showRepositories(List<RepositoryItem> repositoryItems) {
         adapter.addNewRepositoryItems(repositoryItems);
     }
 
     @Override
-    public void showLoading()
-    {
+    public void showLoading() {
         progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void hideLoading()
-    {
+    public void hideLoading() {
         progressBar.setVisibility(View.GONE);
     }
 
     @Override
-    public void showError(String message)
-    {
+    public void showError(String message) {
         showToastMessage(message);
     }
 }

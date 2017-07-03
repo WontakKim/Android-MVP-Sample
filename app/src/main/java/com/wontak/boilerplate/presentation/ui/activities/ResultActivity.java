@@ -13,9 +13,8 @@ import com.wontak.boilerplate.presentation.ui.fragments.ResultFragment;
 
 import butterknife.ButterKnife;
 
-public class ResultActivity extends BaseActivity
-        implements HasComponent<UserComponent>
-{
+public class ResultActivity extends BaseActivity implements HasComponent<UserComponent> {
+
     public static final String KEY_USERNAME = "username";
 
     private ResultFragment fragment;
@@ -23,14 +22,12 @@ public class ResultActivity extends BaseActivity
     private UserComponent userComponent;
 
     @Override
-    public UserComponent getComponent()
-    {
+    public UserComponent getComponent() {
         return userComponent;
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
@@ -40,8 +37,7 @@ public class ResultActivity extends BaseActivity
         initializeFragment();
     }
 
-    private void initializeInjector()
-    {
+    private void initializeInjector() {
         userComponent = DaggerUserComponent.builder()
                 .applicationComponent(getApplicationComponent())
                 .activityModule(getActivityModule())
@@ -49,19 +45,16 @@ public class ResultActivity extends BaseActivity
                 .build();
     }
 
-    private void initializeFragment()
-    {
+    private void initializeFragment() {
         String username = getIntent().getExtras().getString(KEY_USERNAME);
         fragment = ResultFragment.newInstance(username);
         addFragment(R.id.content_main, fragment);
     }
 
 
-    public void launchWebActivity(String url)
-    {
+    public void launchWebActivity(String url) {
         Intent intent = new Intent(this, WebActivity.class);
         intent.putExtra(WebActivity.KEY_URL, url);
-
         startActivity(intent);
     }
 }

@@ -1,9 +1,10 @@
 package com.wontak.boilerplate.domain.repositories;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
-public interface GithubRepository
-{
+public interface GithubRepository {
+
     Observable getUser(String username);
+
     Observable getUserRepositories(String username);
 }

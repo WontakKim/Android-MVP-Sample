@@ -14,107 +14,89 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import rx.Subscriber;
+import io.reactivex.observers.DisposableObserver;
 
-public class ResultPresenter
-{
+public class ResultPresenter {
+
     private GetUserUseCase getUserUseCase;
     private GetUserRepositoriesUseCase getUserRepositoriesUseCase;
 
     private ResultView.View view;
 
     @Inject
-    public ResultPresenter(
-            GetUserUseCase getUserUseCase,
-            GetUserRepositoriesUseCase getUserRepositoriesUseCase
-    )
-    {
+    public ResultPresenter(GetUserUseCase getUserUseCase, GetUserRepositoriesUseCase getUserRepositoriesUseCase) {
         this.getUserUseCase = getUserUseCase;
         this.getUserRepositoriesUseCase = getUserRepositoriesUseCase;
     }
 
-    public void destroy()
-    {
-        getUserUseCase.unsubscribe();
-        getUserRepositoriesUseCase.unsubscribe();
+    public void destroy() {
+        getUserUseCase.dispose();
+        getUserRepositoriesUseCase.dispose();
     }
 
-    public void setView(ResultView.View view)
-    {
+    public void setView(ResultView.View view) {
         this.view = view;
     }
 
-    public void getUser(String username)
-    {
-        getUserUseCase.execute(username, new GetUserSubscriber());
+    public void getUser(String username) {
+        getUserUseCase.execute(new GetUserDisposableObserver(), username);
     }
 
-    public void getUserRepositories(String username)
-    {
-        getUserRepositoriesUseCase.execute(username, new GetUserRepositoriesSubscriber());
+    public void getUserRepositories(String username) {
+        getUserRepositoriesUseCase.execute(new GetUserRepositoriesDisposableObserver(), username);
     }
 
-    private void showUserDetailsInView(User user)
-    {
+    private void showUserDetailsInView(User user) {
         view.showUser(user);
     }
 
-    private void showRepositoriesInView(List<Repository> repositories)
-    {
+    private void showRepositoriesInView(List<Repository> repositories) {
         view.showRepositories(UIModelConverter.convertToUIModel(repositories));
     }
 
-    private void hideViewLoading()
-    {
+    private void hideViewLoading() {
         view.hideLoading();
     }
 
-    private void showErrorMessage(ErrorBundle errorBundle)
-    {
+    private void showErrorMessage(ErrorBundle errorBundle) {
         String errorMessage = ErrorMessageFactory.create(view.context(), errorBundle.getException());
         view.showError(errorMessage);
     }
 
-    private final class GetUserSubscriber extends Subscriber<User>
-    {
+    private final class GetUserDisposableObserver extends DisposableObserver<User> {
+
         @Override
-        public void onCompleted()
-        {
+        public void onComplete() {
 
         }
 
         @Override
-        public void onError(Throwable e)
-        {
+        public void onError(Throwable e) {
             hideViewLoading();
             showErrorMessage(new DefaultErrorBundle((Exception) e));
         }
 
         @Override
-        public void onNext(User user)
-        {
+        public void onNext(User user) {
             showUserDetailsInView(user);
         }
     }
 
-    private final class GetUserRepositoriesSubscriber extends Subscriber<List<Repository>>
-    {
+    private final class GetUserRepositoriesDisposableObserver extends DisposableObserver<List<Repository>> {
+
         @Override
-        public void onCompleted()
-        {
+        public void onComplete() {
             hideViewLoading();
         }
 
         @Override
-        public void onError(Throwable e)
-        {
+        public void onError(Throwable e) {
             hideViewLoading();
             showErrorMessage(new DefaultErrorBundle((Exception) e));
         }
 
         @Override
-        public void onNext(List<Repository> repositories)
-        {
+        public void onNext(List<Repository> repositories) {
             showRepositoriesInView(repositories);
         }
     }

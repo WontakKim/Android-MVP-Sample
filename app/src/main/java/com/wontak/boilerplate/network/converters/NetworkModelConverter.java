@@ -6,10 +6,9 @@ import com.wontak.boilerplate.network.models.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NetworkModelConverter
-{
-    public static com.wontak.boilerplate.domain.models.User convertToDomainModel(User user)
-    {
+public class NetworkModelConverter {
+
+    public static com.wontak.boilerplate.domain.models.User convertToDomainModel(User user) {
         com.wontak.boilerplate.domain.models.User toReturn = new com.wontak.boilerplate.domain.models.User();
 
         toReturn.username = user.login;
@@ -26,20 +25,17 @@ public class NetworkModelConverter
         return toReturn;
     }
 
-    public static List<com.wontak.boilerplate.domain.models.Repository> convertToDomainModel(List<Repository> repositories)
-    {
+    public static List<com.wontak.boilerplate.domain.models.Repository> convertToDomainModel(List<Repository> repositories) {
         List<com.wontak.boilerplate.domain.models.Repository> toReturn = new ArrayList();
 
-        for (Repository repository : repositories)
-        {
+        for (Repository repository : repositories) {
             toReturn.add(convertToDomainModel(repository));
         }
 
         return toReturn;
     }
 
-    public static com.wontak.boilerplate.domain.models.Repository convertToDomainModel(Repository repository)
-    {
+    public static com.wontak.boilerplate.domain.models.Repository convertToDomainModel(Repository repository) {
         com.wontak.boilerplate.domain.models.Repository toReturn = new com.wontak.boilerplate.domain.models.Repository();
 
         toReturn.id = repository.id;

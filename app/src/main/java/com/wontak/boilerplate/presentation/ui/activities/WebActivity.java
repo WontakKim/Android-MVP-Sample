@@ -8,19 +8,18 @@ import android.webkit.WebViewClient;
 import com.wontak.boilerplate.R;
 import com.wontak.boilerplate.base.BaseActivity;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class WebActivity extends BaseActivity
-{
+public class WebActivity extends BaseActivity {
+
     public static final String KEY_URL = "url";
 
-    @Bind(R.id.webview)
+    @BindView(R.id.webview)
     WebView webView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
 
@@ -29,8 +28,7 @@ public class WebActivity extends BaseActivity
         initializeWebView();
     }
 
-    private void initializeWebView()
-    {
+    private void initializeWebView() {
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
@@ -39,24 +37,21 @@ public class WebActivity extends BaseActivity
     }
 
     @Override
-    protected void onDestroy()
-    {
+    protected void onDestroy() {
         super.onDestroy();
         webView.removeAllViews();
         webView.destroy();
     }
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         if (webView.canGoBack())
             webView.goBack();
         else
             finish();
     }
 
-    private String getUrl()
-    {
+    private String getUrl() {
         return getIntent().getExtras().getString(KEY_URL);
     }
 }

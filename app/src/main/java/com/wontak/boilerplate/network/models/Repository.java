@@ -2,8 +2,8 @@ package com.wontak.boilerplate.network.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Repository
-{
+public class Repository {
+
     @SerializedName("id")
     public long id;
 
