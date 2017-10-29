@@ -1,10 +1,15 @@
 package com.wontak.boilerplate.domain.repositories;
 
+import com.wontak.boilerplate.domain.models.Repository;
+import com.wontak.boilerplate.domain.models.User;
+
+import java.util.List;
+
 import io.reactivex.Observable;
 
 public interface GithubRepository {
 
-    Observable getUser(String username);
+    Observable<User> getUser(String username);
 
-    Observable getUserRepositories(String username);
+    Observable<List<Repository>> getUserRepositories(String username);
 }
