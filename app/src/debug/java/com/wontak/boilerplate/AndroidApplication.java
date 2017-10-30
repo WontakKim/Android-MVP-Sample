@@ -2,6 +2,7 @@ package com.wontak.boilerplate;
 
 import com.wontak.boilerplate.Timber.DebugTree;
 
+import butterknife.ButterKnife;
 import timber.log.Timber;
 
 public class AndroidApplication extends BaseApplication {
@@ -11,5 +12,6 @@ public class AndroidApplication extends BaseApplication {
         super.onCreate();
 
         Timber.plant(new DebugTree());
+        ButterKnife.setDebug(true);
     }
 }
