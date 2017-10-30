@@ -1,5 +1,5 @@
 # Android-Sample-App
-Android sample project using [Android-Boilerplate](https://github.com/WontakKim/Android-Boilerplate) with github client sample codes
+Android sample project using clean architecture with github client sample codes
 
 The project is setup using:
 
