@@ -1,4 +1,4 @@
-package com.wontak.boilerplate.Timber;
+package com.wontak.sample.Timber;
 
 import android.util.Log;
 
