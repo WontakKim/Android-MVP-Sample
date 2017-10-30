@@ -8,5 +8,5 @@ The project is setup using:
 - [Retrofit](http://square.github.io/retrofit/) and [OkHttp](https://github.com/square/okhttp)
 - [Dagger 2](http://google.github.io/dagger/)
 - [Butterknife](https://github.com/JakeWharton/butterknife)
-- [Timber] (https://github.com/JakeWharton/timber)
-- [Retrolambda] (https://github.com/orfjackal/retrolambda)
+- [Timber](https://github.com/JakeWharton/timber)
+- [Retrolambda](https://github.com/orfjackal/retrolambda)
