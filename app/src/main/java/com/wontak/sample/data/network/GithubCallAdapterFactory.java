@@ -1,7 +1,4 @@
-package com.wontak.sample.network;
-
-import com.wontak.sample.network.exceptions.NetworkConnectionException;
-import com.wontak.sample.network.exceptions.UserNotFoundException;
+package com.wontak.sample.data.network;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
@@ -9,8 +6,6 @@ import java.lang.reflect.Type;
 import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.CallAdapter;
-import retrofit2.HttpException;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
@@ -51,21 +46,8 @@ public class GithubCallAdapterFactory extends CallAdapter.Factory {
         public Observable<?> adapt(Call<R> call) {
             return ((Observable<R>) wrapped.adapt(call))
                     .onErrorResumeNext(throwable -> {
-                        return Observable.error(asGithubException(throwable));
+                        return Observable.error(throwable);
                     });
-        }
-
-        private Exception asGithubException(Throwable throwable) {
-            if (throwable instanceof HttpException) {
-                HttpException httpException = (HttpException) throwable;
-                Response response = httpException.response();
-                switch (response.code()) {
-                    case 404:
-                        return new UserNotFoundException();
-                }
-            }
-
-            return new NetworkConnectionException(throwable.getCause());
         }
     }
 }

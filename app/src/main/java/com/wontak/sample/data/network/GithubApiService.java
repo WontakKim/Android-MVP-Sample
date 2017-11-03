@@ -1,7 +1,7 @@
-package com.wontak.sample.network;
+package com.wontak.sample.data.network;
 
-import com.wontak.sample.network.models.Repository;
-import com.wontak.sample.network.models.User;
+import com.wontak.sample.data.models.Repository;
+import com.wontak.sample.data.models.User;
 
 import java.util.List;
 

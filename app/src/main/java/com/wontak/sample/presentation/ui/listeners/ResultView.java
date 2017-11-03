@@ -2,8 +2,8 @@ package com.wontak.sample.presentation.ui.listeners;
 
 import android.content.Context;
 
+import com.wontak.sample.domain.models.Repository;
 import com.wontak.sample.domain.models.User;
-import com.wontak.sample.presentation.models.RepositoryItem;
 
 import java.util.List;
 
@@ -18,11 +18,11 @@ public interface ResultView {
 
         Context context();
 
-        void onRepositoryClick(RepositoryItem repositoryItem);
+        void onRepositoryClick(Repository repository);
 
         void showUser(User user);
 
-        void showRepositories(List<RepositoryItem> repositoryItems);
+        void showRepositories(List<Repository> repositories);
 
         void showLoading();
 

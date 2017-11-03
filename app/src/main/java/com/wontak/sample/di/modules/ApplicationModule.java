@@ -4,10 +4,10 @@ import android.app.Application;
 import android.content.Context;
 
 import com.wontak.sample.R;
+import com.wontak.sample.data.network.GithubApiService;
+import com.wontak.sample.data.network.GithubCallAdapterFactory;
 import com.wontak.sample.data.repositories.GithubDataRepository;
 import com.wontak.sample.domain.repositories.GithubRepository;
-import com.wontak.sample.network.GithubApiService;
-import com.wontak.sample.network.GithubCallAdapterFactory;
 
 import javax.inject.Singleton;
 

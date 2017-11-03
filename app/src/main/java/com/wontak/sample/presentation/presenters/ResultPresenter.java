@@ -1,13 +1,9 @@
 package com.wontak.sample.presentation.presenters;
 
-import com.wontak.sample.domain.exceptions.DefaultErrorBundle;
-import com.wontak.sample.domain.exceptions.ErrorBundle;
 import com.wontak.sample.domain.interactors.GetUserRepositoriesUseCase;
 import com.wontak.sample.domain.interactors.GetUserUseCase;
 import com.wontak.sample.domain.models.Repository;
 import com.wontak.sample.domain.models.User;
-import com.wontak.sample.presentation.converters.UIModelConverter;
-import com.wontak.sample.presentation.exceptions.ErrorMessageFactory;
 import com.wontak.sample.presentation.ui.listeners.ResultView;
 
 import java.util.List;
@@ -51,16 +47,15 @@ public class ResultPresenter {
     }
 
     private void showRepositoriesInView(List<Repository> repositories) {
-        view.showRepositories(UIModelConverter.convertToUIModel(repositories));
+        view.showRepositories(repositories);
     }
 
     private void hideViewLoading() {
         view.hideLoading();
     }
 
-    private void showErrorMessage(ErrorBundle errorBundle) {
-        String errorMessage = ErrorMessageFactory.create(view.context(), errorBundle.getException());
-        view.showError(errorMessage);
+    private void showErrorMessage(String message) {
+        view.showError(message);
     }
 
     private final class GetUserDisposableObserver extends DisposableObserver<User> {
@@ -73,7 +68,7 @@ public class ResultPresenter {
         @Override
         public void onError(Throwable e) {
             hideViewLoading();
-            showErrorMessage(new DefaultErrorBundle((Exception) e));
+            showErrorMessage(e.getMessage());
         }
 
         @Override
@@ -92,7 +87,7 @@ public class ResultPresenter {
         @Override
         public void onError(Throwable e) {
             hideViewLoading();
-            showErrorMessage(new DefaultErrorBundle((Exception) e));
+            showErrorMessage(e.getMessage());
         }
 
         @Override

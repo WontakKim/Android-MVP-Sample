@@ -13,8 +13,8 @@ import android.widget.ProgressBar;
 import com.wontak.sample.R;
 import com.wontak.sample.base.BaseFragment;
 import com.wontak.sample.di.components.UserComponent;
+import com.wontak.sample.domain.models.Repository;
 import com.wontak.sample.domain.models.User;
-import com.wontak.sample.presentation.models.RepositoryItem;
 import com.wontak.sample.presentation.presenters.ResultPresenter;
 import com.wontak.sample.presentation.ui.activities.ResultActivity;
 import com.wontak.sample.presentation.ui.adapters.RepositoriesAdapter;
@@ -106,8 +106,8 @@ public class ResultFragment extends BaseFragment implements ResultView.View {
     }
 
     @Override
-    public void onRepositoryClick(RepositoryItem repositoryItem) {
-        ((ResultActivity) getActivity()).launchWebActivity(repositoryItem.htmlUrl);
+    public void onRepositoryClick(Repository repository) {
+        ((ResultActivity) getActivity()).launchWebActivity(repository.htmlUrl);
     }
 
     @Override
@@ -116,8 +116,8 @@ public class ResultFragment extends BaseFragment implements ResultView.View {
     }
 
     @Override
-    public void showRepositories(List<RepositoryItem> repositoryItems) {
-        adapter.addNewRepositoryItems(repositoryItems);
+    public void showRepositories(List<Repository> repositories) {
+        adapter.addNewItems(repositories);
     }
 
     @Override

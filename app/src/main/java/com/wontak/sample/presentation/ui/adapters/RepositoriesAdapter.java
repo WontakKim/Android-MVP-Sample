@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.wontak.sample.R;
-import com.wontak.sample.presentation.models.RepositoryItem;
+import com.wontak.sample.domain.models.Repository;
 import com.wontak.sample.presentation.ui.listeners.ResultView;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 
 public class RepositoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ResultView.RecyclerViewClickListener {
 
-    private List<RepositoryItem> repositoryItems = new ArrayList();
+    private List<Repository> items = new ArrayList();
     private ResultView.View view;
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -38,7 +38,7 @@ public class RepositoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             this.listener = listener;
         }
 
-        public void setup(RepositoryItem item) {
+        public void setup(Repository item) {
             nameLabel.setText(item.name);
         }
 
@@ -63,26 +63,26 @@ public class RepositoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        RepositoryItem repositoryItem = repositoryItems.get(position);
+        Repository repositoryItem = items.get(position);
         ((ViewHolder) holder).setup(repositoryItem);
     }
 
     @Override
     public int getItemCount() {
-        return repositoryItems.size();
+        return items.size();
     }
 
     @Override
     public void onViewClick(int index) {
-        view.onRepositoryClick(repositoryItems.get(index));
+        view.onRepositoryClick(items.get(index));
     }
 
-    public void addNewRepositoryItems(@NonNull List<RepositoryItem> repositoryItems) {
+    public void addNewItems(@NonNull List<Repository> items) {
         // clean up old data
-        if (repositoryItems != null)
-            this.repositoryItems.clear();
+        if (items != null)
+            this.items.clear();
 
-        this.repositoryItems = repositoryItems;
+        this.items.addAll(items);
 
         notifyDataSetChanged();
     }

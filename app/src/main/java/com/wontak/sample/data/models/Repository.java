@@ -1,4 +1,4 @@
-package com.wontak.sample.network.models;
+package com.wontak.sample.data.models;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -1,9 +1,9 @@
 package com.wontak.sample.repository;
 
 import com.wontak.sample.data.repositories.GithubDataRepository;
-import com.wontak.sample.network.GithubApiService;
-import com.wontak.sample.network.models.Repository;
-import com.wontak.sample.network.models.User;
+import com.wontak.sample.data.network.GithubApiService;
+import com.wontak.sample.data.models.Repository;
+import com.wontak.sample.data.models.User;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,6 +18,8 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.android.plugins.RxAndroidPlugins;
 import io.reactivex.schedulers.Schedulers;
+
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GithubDataRepositoryTest {
@@ -37,22 +39,22 @@ public class GithubDataRepositoryTest {
     @Test
     public void testGetUser() {
         User user = new User();
-        Mockito.when(mockGithubApiService.getUser(FAKE_USER_ID))
+        when(mockGithubApiService.getUser(FAKE_USER_ID))
                 .thenReturn(Observable.just(user));
 
         mockGithubDataRepository.getUser(FAKE_USER_ID);
 
-        Mockito.verify(mockGithubApiService).getUser(FAKE_USER_ID);
+        verify(mockGithubApiService).getUser(FAKE_USER_ID);
     }
 
     public void testGetRepositories() {
         List<Repository> repositories = new ArrayList();
         repositories.add(new Repository());
-        Mockito.when(mockGithubApiService.getUsersRepositories(FAKE_USER_ID))
+        when(mockGithubApiService.getUsersRepositories(FAKE_USER_ID))
                 .thenReturn(Observable.just(repositories));
 
         mockGithubDataRepository.getUserRepositories(FAKE_USER_ID);
 
-        Mockito.verify(mockGithubApiService).getUsersRepositories(FAKE_USER_ID);
+        verify(mockGithubApiService).getUsersRepositories(FAKE_USER_ID);
     }
 }

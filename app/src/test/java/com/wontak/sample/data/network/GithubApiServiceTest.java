@@ -1,6 +1,6 @@
-package com.wontak.sample.network;
+package com.wontak.sample.data.network;
 
-import com.wontak.sample.network.models.User;
+import com.wontak.sample.data.models.User;
 
 import org.junit.After;
 import org.junit.Before;
