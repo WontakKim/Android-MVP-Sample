@@ -9,4 +9,3 @@ The project is setup using:
 - [Dagger 2](http://google.github.io/dagger/)
 - [Butterknife](https://github.com/JakeWharton/butterknife)
 - [Timber](https://github.com/JakeWharton/timber)
-- [Retrolambda](https://github.com/orfjackal/retrolambda)
