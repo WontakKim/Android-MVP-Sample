@@ -1,4 +1,4 @@
-# Android-Sample-MVP-App
+# Android-MVP-Sample
 Android sample project using clean architecture with github client sample codes
 
 The project is setup using:
